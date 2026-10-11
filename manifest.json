@@ -1,12 +1,13 @@
 {
   "name": "AutoCloseDoors",
   "version_number": "1.0.0",
-  "website_url": "",
+  "website_url": "https://github.com/landoria-gaming/Landoria.AutoCloseDoors",
   "description": "Automatically close the doors.",
   "dependencies": [
     "denikson-BepInExPack_Valheim-5.4.2351"
   ],
   "categories": [
+    "deep-north-update",
     "ai-generated",
     "mods",
     "client-side",
