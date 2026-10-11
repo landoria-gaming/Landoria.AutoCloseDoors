@@ -16,7 +16,9 @@ namespace Landoria.AutoCloseDoors
                 return;
             }
             string status = DoorChoice.IsEnabled(__instance) ? "on" : "off";
-            __result += "\n[<color=yellow><b>Shift + $KEY_Use</b></color>] Auto-close: " + status;
+            string shortcut = Localization.instance.Localize("$KEY_Use");
+            __result += "\n[<color=yellow><b>Shift + " + shortcut +
+                        "</b></color>] Auto-close: " + status;
         }
 
         // Handles Shift+E before Valheim toggles the door.

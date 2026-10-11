@@ -4,12 +4,16 @@
     <LangVersion>latest</LangVersion>
     <AssemblyName>Landoria.AutoCloseDoors</AssemblyName>
     <RootNamespace>Landoria.AutoCloseDoors</RootNamespace>
-    <Version>1.0.0</Version>
-    <AssemblyVersion>1.0.0.0</AssemblyVersion>
-    <FileVersion>1.0.0.0</FileVersion>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <Deterministic>false</Deterministic>
     <ValheimGamePath Condition="'$(ValheimGamePath)' == ''">$(VALHEIM_PATH)</ValheimGamePath>
     <BepInExPath Condition="'$(BepInExPath)' == ''">$(BEPINEX_PATH)</BepInExPath>
     <ValheimManagedPath>$(ValheimGamePath)/valheim_Data/Managed</ValheimManagedPath>
+    <LocalBepInExPath Condition="'$(LocalBepInExPath)' == '' and '$(VALHEIM_BEPINEX_PROFILE_PATH)' != ''">$(VALHEIM_BEPINEX_PROFILE_PATH)/BepInEx</LocalBepInExPath>
+    <LocalBepInExPath Condition="'$(LocalBepInExPath)' == '' and '$(APPDATA)' != ''">$(APPDATA)/r2modmanPlus-local/Valheim/profiles/Default/BepInEx</LocalBepInExPath>
+    <ModDeployPath Condition="'$(ModDeployPath)' == '' and '$(LocalBepInExPath)' != ''">$(LocalBepInExPath)/plugins/Landoria.AutoCloseDoors</ModDeployPath>
+    <DeployOnBuild Condition="'$(DeployOnBuild)' == '' and '$(CI)' != 'true' and Exists('$(LocalBepInExPath)/core/BepInEx.dll')">true</DeployOnBuild>
+    <DeployOnBuild Condition="'$(DeployOnBuild)' == ''">false</DeployOnBuild>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="HarmonyValidator" Version="1.0.0" PrivateAssets="all" />
@@ -20,7 +24,14 @@
     <Reference Include="0Harmony"><HintPath>$(BepInExPath)/core/0Harmony.dll</HintPath><Private>false</Private></Reference>
     <Reference Include="assembly_valheim"><HintPath>$(ValheimManagedPath)/assembly_valheim.dll</HintPath><Private>false</Private></Reference>
     <Reference Include="assembly_utils"><HintPath>$(ValheimManagedPath)/assembly_utils.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="assembly_guiutils"><HintPath>$(ValheimManagedPath)/assembly_guiutils.dll</HintPath><Private>false</Private></Reference>
     <Reference Include="UnityEngine"><HintPath>$(ValheimManagedPath)/UnityEngine.dll</HintPath><Private>false</Private></Reference>
     <Reference Include="UnityEngine.CoreModule"><HintPath>$(ValheimManagedPath)/UnityEngine.CoreModule.dll</HintPath><Private>false</Private></Reference>
   </ItemGroup>
+  <Target Name="DeployMod" AfterTargets="Build"
+          Condition="'$(Configuration)' == 'Release' and '$(DeployOnBuild)' == 'true' and '$(ModDeployPath)' != ''">
+    <MakeDir Directories="$(ModDeployPath)" />
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(ModDeployPath)" SkipUnchangedFiles="true" />
+    <Message Importance="high" Text="Deployed $(TargetFileName) to $(ModDeployPath). Restart Valheim before testing." />
+  </Target>
 </Project>
