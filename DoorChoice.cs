@@ -5,12 +5,18 @@ namespace Landoria.AutoCloseDoors
     // Stores each character's door overrides in saved character data.
     internal static class DoorChoice
     {
-        // Recognizes the three supported buildable doors.
+        // Recognizes doors that Valheim allows players to close with E.
         internal static bool IsTarget(Door door)
         {
-            string name = Utils.GetPrefabName(door.gameObject);
-            return name == "wood_door" || name == "wood_gate" ||
-                   name == "darkwood_gate";
+            return door != null && door.m_keyItem == null && !door.m_canNotBeClosed;
+        }
+
+        // Checks the local player's access before closing a door.
+        internal static bool CanClose(Door door)
+        {
+            return IsTarget(door) && Player.m_localPlayer != null &&
+                   (!door.m_checkGuardStone ||
+                    PrivateArea.CheckAccess(door.transform.position, 0f, false));
         }
 
         // Checks whether this character enabled auto-close for the door.
@@ -30,7 +36,7 @@ namespace Landoria.AutoCloseDoors
                     return false;
                 }
             }
-            return Plugin.Instance?.EnabledByDefault.Value ?? true;
+            return Plugin.Settings?.EnabledByDefault ?? true;
         }
 
         // Switches the saved choice for the local character.
@@ -49,7 +55,7 @@ namespace Landoria.AutoCloseDoors
             player.m_customData[enable ? enabledKey : disabledKey] = "1";
             if (!enable)
             {
-                DoorTimers.Cancel(door);
+                DoorProximity.Cancel(door);
             }
             string status = enable ? "enabled" : "disabled";
             player.Message(MessageHud.MessageType.Center, "Auto-close " + status);
