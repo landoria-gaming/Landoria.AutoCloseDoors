@@ -1,0 +1,15 @@
+{
+  "name": "AutoCloseDoors",
+  "version_number": "1.0.0",
+  "website_url": "",
+  "description": "Automatically close the doors.",
+  "dependencies": [
+    "denikson-BepInExPack_Valheim-5.4.2351"
+  ],
+  "categories": [
+    "ai-generated",
+    "mods",
+    "client-side",
+    "utility"
+  ]
+}
