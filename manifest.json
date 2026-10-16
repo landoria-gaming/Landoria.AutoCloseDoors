@@ -1,6 +1,6 @@
 {
   "name": "AutoCloseDoors",
-  "version_number": "1.0.1",
+  "version_number": "1.0.2",
   "website_url": "https://github.com/landoria-gaming/Landoria.AutoCloseDoors",
   "description": "Automatically close the doors behind you.",
   "dependencies": [

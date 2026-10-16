@@ -1,4 +1,5 @@
 using HarmonyLib;
+using UnityEngine;
 
 namespace Landoria.AutoCloseDoors
 {
@@ -17,11 +18,11 @@ namespace Landoria.AutoCloseDoors
             }
             string status = DoorChoice.IsEnabled(__instance) ? "on" : "off";
             string shortcut = Localization.instance.Localize("$KEY_Use");
-            __result += "\n[<color=yellow><b>Shift + " + shortcut +
+            __result += "\n[<color=yellow><b>" + Plugin.Settings.ToggleModifierName + " + " + shortcut +
                         "</b></color>] Auto-close: " + status;
         }
 
-        // Handles Shift+E before Valheim toggles the door.
+        // Handles the configured modifier before Valheim toggles the door.
         [HarmonyPatch(typeof(Door), nameof(Door.Interact))]
         [HarmonyPrefix]
         private static bool Interact(Door __instance, Humanoid character, bool hold,
@@ -35,7 +36,8 @@ namespace Landoria.AutoCloseDoors
                 __state = view != null && view.IsValid() &&
                           view.GetZDO().GetInt(ZDOVars.s_state) == 0;
             }
-            if (!DoorChoice.IsTarget(__instance) || hold || !alt ||
+            if (!DoorChoice.IsTarget(__instance) || hold ||
+                Plugin.Settings == null || !Input.GetKey(Plugin.Settings.ToggleModifier) ||
                 character != Player.m_localPlayer)
             {
                 return true;
@@ -45,6 +47,7 @@ namespace Landoria.AutoCloseDoors
                 return true;
             }
             DoorChoice.Toggle(__instance);
+            __state = false;
             __result = true;
             return false;
         }

@@ -27,6 +27,7 @@
     <Reference Include="assembly_guiutils"><HintPath>$(ValheimManagedPath)/assembly_guiutils.dll</HintPath><Private>false</Private></Reference>
     <Reference Include="UnityEngine"><HintPath>$(ValheimManagedPath)/UnityEngine.dll</HintPath><Private>false</Private></Reference>
     <Reference Include="UnityEngine.CoreModule"><HintPath>$(ValheimManagedPath)/UnityEngine.CoreModule.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.InputLegacyModule"><HintPath>$(ValheimManagedPath)/UnityEngine.InputLegacyModule.dll</HintPath><Private>false</Private></Reference>
   </ItemGroup>
   <Target Name="DeployMod" AfterTargets="Build"
           Condition="'$(Configuration)' == 'Release' and '$(DeployOnBuild)' == 'true' and '$(ModDeployPath)' != ''">
