@@ -59,7 +59,16 @@ namespace Landoria.AutoCloseDoors
             player.m_customData.Remove(enabledKey);
             player.m_customData.Remove(disabledKey);
             player.m_customData[enable ? enabledKey : disabledKey] = "1";
-            if (!enable)
+            if (enable)
+            {
+                ZNetView view = door.GetComponent<ZNetView>();
+                if (view != null && view.IsValid() &&
+                    view.GetZDO().GetInt(ZDOVars.s_state) != 0)
+                {
+                    DoorProximity.Track(door);
+                }
+            }
+            else
             {
                 DoorProximity.Cancel(door);
             }

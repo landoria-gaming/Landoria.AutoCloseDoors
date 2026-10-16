@@ -26,10 +26,10 @@ namespace Landoria.AutoCloseDoors
         [HarmonyPatch(typeof(Door), nameof(Door.Interact))]
         [HarmonyPrefix]
         private static bool Interact(Door __instance, Humanoid character, bool hold,
-            bool alt, ref bool __result, out bool __state)
+            bool alt, ref bool __result, out bool? __state)
         {
             __state = false;
-            if (DoorChoice.IsTarget(__instance) && !hold && !alt &&
+            if (DoorChoice.IsTarget(__instance) && !hold &&
                 character == Player.m_localPlayer)
             {
                 ZNetView view = __instance.GetComponent<ZNetView>();
@@ -47,7 +47,7 @@ namespace Landoria.AutoCloseDoors
                 return true;
             }
             DoorChoice.Toggle(__instance);
-            __state = false;
+            __state = null;
             __result = true;
             return false;
         }
@@ -56,9 +56,9 @@ namespace Landoria.AutoCloseDoors
         [HarmonyPatch(typeof(Door), nameof(Door.Interact))]
         [HarmonyPostfix]
         private static void AfterInteract(Door __instance, Humanoid character,
-            bool hold, bool alt, bool __result, bool __state)
+            bool hold, bool alt, bool __result, bool? __state)
         {
-            if (!DoorChoice.IsTarget(__instance) || hold || alt || !__result ||
+            if (!__state.HasValue || !DoorChoice.IsTarget(__instance) || hold || !__result ||
                 character != Player.m_localPlayer)
             {
                 return;
@@ -68,7 +68,7 @@ namespace Landoria.AutoCloseDoors
             {
                 return;
             }
-            if (__state && DoorChoice.IsEnabled(__instance))
+            if (__state.Value && DoorChoice.IsEnabled(__instance))
             {
                 DoorProximity.Track(__instance);
             }

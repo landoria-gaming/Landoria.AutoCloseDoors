@@ -15,6 +15,10 @@ Edit these settings in the BepInEx configuration file. Changes reload while the 
 | `General.CloseDistanceMeters` | `5` | Closes a tracked door when no player is within this distance in meters. |
 | `General.ToggleModifier` | Alt | Modifier for toggling a door's auto-close choice: Alt, Shift, or Ctrl. |
 
+## Demo
+
+![Auto-close demonstration](assets/autoclose.gif)
+
 ## Contact
 
 Report bugs through [GitHub Issues](https://github.com/landoria-gaming/Landoria.AutoCloseDoors/issues).
