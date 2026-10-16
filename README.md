@@ -17,7 +17,7 @@ Edit these settings in the BepInEx configuration file. Changes reload while the 
 
 ## Demo
 
-![Auto-close demonstration](assets/autoclose.gif)
+![Auto-close demonstration](https://raw.githubusercontent.com/landoria-gaming/Landoria.AutoCloseDoors/refs/heads/main/assets/autoclose.gif)
 
 ## Contact
 
