@@ -2,7 +2,7 @@
 
 ## 1.0.2
 
-- Changed default modifier from Shift to Alt
+- Made the modifier key configurable (alt by default)
 
 ## 1.0.1
 
