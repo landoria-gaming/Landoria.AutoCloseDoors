@@ -1,6 +1,6 @@
 # AutoClose Doors
 
-Automatically closes doors you open when no player is nearby.
+Automatically closes player-built doors you open when no player is nearby. Other doors are ignored.
 
 - Auto-close can be disabled for each door (Shift+E on the door).
 - The choice is saved per character.

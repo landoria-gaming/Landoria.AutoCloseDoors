@@ -5,10 +5,16 @@ namespace Landoria.AutoCloseDoors
     // Stores each character's door overrides in saved character data.
     internal static class DoorChoice
     {
-        // Recognizes doors that Valheim allows players to close with E.
+        // Recognizes player-built doors that Valheim allows players to close with E.
         internal static bool IsTarget(Door door)
         {
-            return door != null && door.m_keyItem == null && !door.m_canNotBeClosed;
+            if (door == null || door.m_keyItem != null || door.m_canNotBeClosed)
+            {
+                return false;
+            }
+
+            Piece piece = door.GetComponent<Piece>();
+            return piece != null && piece.IsPlacedByPlayer();
         }
 
         // Checks the local player's access before closing a door.

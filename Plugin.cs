@@ -9,7 +9,7 @@ namespace Landoria.AutoCloseDoors
     {
         public const string PluginGuid = "Landoria.AutoCloseDoors";
         public const string PluginName = "AutoClose Doors";
-        public const string PluginVersion = "1.0.0";
+        public const string PluginVersion = "1.0.1";
         internal static ModConfig Settings;
         private Harmony harmony;
 
